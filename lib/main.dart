@@ -27,7 +27,7 @@ class _MyHomePageState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    status = fetchCryptocurrencyStatus();
+    status = fetchStatus();
   }
 
   @override
@@ -158,10 +158,10 @@ class _MyHomePageState extends State<MyApp> {
 }
 
 
-Future<Status> fetchCryptocurrencyStatus() async {
+Future<Status> fetchStatus() async {
   // TODO: Use a Client session over one-off requests using
   // the `http` library.
-  final response = await http.get('http://localhost:10000/status');
+  final response = await http.get('http://api.gregpoints.com/status');
 
   if (response.statusCode == 200) {
     return Status.fromString(response.body);
