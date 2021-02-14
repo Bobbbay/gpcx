@@ -32,7 +32,7 @@ class _MyHomePageState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called,
+    // This method is rerun every time setState is called
     return MaterialApp(
       title: 'Greg Points',
       theme: ThemeData(
@@ -42,12 +42,42 @@ class _MyHomePageState extends State<MyApp> {
        backgroundColor: Colors.black,
        primarySwatch: Colors.blue,
       ),
-    home: Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text("Home"),
-      ),
+      home: Scaffold(
+        appBar: AppBar(
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          title: Text("Home"),
+          actions: <Widget>[
+            Center(
+              // TODO: Find a more responsive method
+              child: FutureBuilder<Status>(
+                future: status,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Text(
+                      "${snapshot.data.json["aregk"]["points"]} GP"
+                    );
+                  }
+                  else if (snapshot.hasError) { return Text("${snapshot.error}"); }
+
+                  return Center (
+                    child: SizedBox(
+                      height: 100,
+                      width: 100,
+                      child: CircularProgressIndicator()
+                    )
+                  );
+                }
+              )
+            ),
+            FlatButton(
+              textColor: Colors.white,
+              onPressed: () {},
+              child: Text("aregk"),
+              shape: CircleBorder(side: BorderSide(color: Colors.transparent))
+            )
+          ]
+        ),
         body: Center(
           // Center is a layout widget. It takes a single child and positions it
           // in the middle of the parent.
@@ -57,76 +87,73 @@ class _MyHomePageState extends State<MyApp> {
             // children horizontally, and tries to be as tall as its parent.
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Text(
-                      '1',
-                      style: Theme.of(context).textTheme.headline4,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  /*LineChart(
+                      LineChartData(
+                      lineBarsData: [
+                        LineChartBarData(
+                          spots: [
+                            FlSpot(1, 2),
+                            FlSpot(2, 2),
+                            FlSpot(3, 3),
+                          ]
+                        ),
+                        LineChartBarData(
+                          spots: [
+                            FlSpot(1, 2),
+                            FlSpot(2, 2),
+                            FlSpot(3, 3),
+                          ]
+                        ),
+                      ]
                     ),
-                    Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                  ),*/
+                  Text(
+                    "1",
+                    style: Theme.of(context).textTheme.headline4,
+                  ),
+                  Text(
+                    "2",
+                    style: Theme.of(context).textTheme.headline4,
+                  ),
+                  Text(
+                    "3",
+                    style: Theme.of(context).textTheme.headline4,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Text(
+                    '4',
+                    style: Theme.of(context).textTheme.headline4,
+                  ),
+                  Text(
+                    '5',
+                    style: Theme.of(context).textTheme.headline4,
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Row(
                         children: <Widget>[
                           Text(
-                            'Greg Points: ',
-                            style: Theme.of(context).textTheme.headline4,
-                          ),
-                          Text(
-                            'Cryptocurrency: ',
-                            style: Theme.of(context).textTheme.headline4,
-                          ),
-                          Text(
-                            '10th place',
+                            '6',
                             style: Theme.of(context).textTheme.headline4,
                           )
                         ]
-                      ),
-                    ),
-                    Container(
-                      // TODO: Find a more responsive method
-                      height: 300,
-                      width: 500,
-                      child: FutureBuilder<Status>(
-                        future: status,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) { return Text("${snapshot.data.json["jeffreyt"]["points"]}"); }
-                          else if (snapshot.hasError) { return Text("${snapshot.error}"); }
-
-                          return Center (
-                            child: SizedBox(
-                              height: 100,
-                              width: 100,
-                              child: CircularProgressIndicator()
-                            )
-                          );
-                        }
                       )
-                    )
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Text(
-                      '4',
-                      style: Theme.of(context).textTheme.headline4,
-                    ),
-                    Text(
-                      '5',
-                      style: Theme.of(context).textTheme.headline4,
-                    ),
-                    Text(
-                      '6',
-                      style: Theme.of(context).textTheme.headline4,
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                    ]
+                  )
+                ]
+              )
+            ]
           ),
         ),
-      );
+      )
+    );
   }
 }
 
